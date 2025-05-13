@@ -22,11 +22,13 @@ public class DynamicLink public constructor(longLink: Uri) {
      * This represents the target destination for the Dynamic Link.
      */
     public val url: Uri
+
     /**
      * A map of UTM parameters extracted from the long URL.
      * These parameters are commonly used for tracking the source, medium, and campaign of the link.
      */
     public val utmParameters: Map<String, String>
+
     /**
      * The minimum app version required to handle the Dynamic Link, extracted from the "imv" parameter.
      * If no version was specified at creation, this value will be null.
@@ -37,7 +39,8 @@ public class DynamicLink public constructor(longLink: Uri) {
         val allParams: Map<String, String?> =
             longLink.queryParameterNames.associateWith { longLink.getQueryParameter(it) }
         val rawLink = longLink.getQueryParameter("link")
-        url = rawLink?.toUri() ?: throw IllegalArgumentException("Missing or invalid 'link' parameter in the URL")
+        url = rawLink?.toUri()
+            ?: throw IllegalArgumentException("Missing or invalid 'link' parameter in the URL")
         val amv = longLink.getQueryParameter("amv")
         minimumAppVersion = amv?.toIntOrNull()
         utmParameters = allParams.filterKeys { it.startsWith("utm_") }

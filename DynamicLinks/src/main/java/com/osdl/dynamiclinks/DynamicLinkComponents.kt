@@ -54,9 +54,7 @@ public data class DynamicLinkComponents(
 
         fun addParams(encodable: DynamicLinkParameter?) {
             encodable?.toMap()?.forEach { (key, value) ->
-                val encodedKey = Uri.encode(key)
-                val encodedValue = Uri.encode(value.toString())
-                builder.appendQueryParameter(encodedKey, encodedValue)
+                builder.appendQueryParameter(key, value)
             }
         }
 
@@ -185,7 +183,7 @@ public data class DynamicLinkOptionsParameters(
     val pathLength: DynamicLinkPathLength = DynamicLinkPathLength.UNGUESSABLE
 ) : DynamicLinkParameter {
     override fun toMap(): Map<String, String> =
-        mapOf("pathLength" to pathLength.toQueryValue())
+        mapOf("path" to pathLength.toQueryValue())
 }
 
 /**
